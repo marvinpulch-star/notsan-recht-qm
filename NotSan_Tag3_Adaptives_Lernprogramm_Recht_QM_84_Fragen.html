@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<title>NotSan Tag 3 – Adaptiv Recht & QM</title>
+<style>
+:root{
+  --bg:#0b1120;--panel:#111a2c;--panel2:#162238;--line:#2b3952;
+  --text:#f7f9fc;--muted:#a9b7cc;--accent:#67e8f9;--accent2:#a7f3d0;
+  --good:#34d399;--bad:#fb7185;--warn:#fbbf24;--blue:#60a5fa;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+button{font:inherit}
+.top{position:sticky;top:0;z-index:10;background:rgba(11,17,32,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.topin{max-width:980px;margin:auto;padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.brand strong{display:block;font-size:15px} .brand span{font-size:12px;color:var(--muted)}
+.wrap{max-width:980px;margin:auto;padding:18px 14px 70px}
+.card{background:linear-gradient(180deg,var(--panel),#0f1829);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.16);margin-bottom:14px}
+h1{font-size:clamp(25px,5vw,42px);margin:8px 0 8px;line-height:1.08}
+h2{font-size:20px;margin:0 0 10px}
+p{line-height:1.5}
+.muted{color:var(--muted)} .small{font-size:12px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#0c1526;border-radius:999px;padding:7px 10px;font-size:12px;color:#dbe7f5}
+.notice{border-left:4px solid var(--accent);background:#0d1b2d;padding:11px 12px;border-radius:10px;color:#dce8f7}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.stat{background:#0c1526;border:1px solid var(--line);border-radius:14px;padding:11px}
+.stat b{display:block;font-size:22px} .stat span{font-size:11px;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+button{border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:#152239;color:var(--text);cursor:pointer;font-weight:700}
+button.primary{background:var(--accent);color:#08202a;border-color:transparent}
+button.good{background:var(--good);color:#05251c;border-color:transparent}
+button.danger{background:#3a1620;color:#ffd6dc;border-color:#713040}
+button:disabled{opacity:.5;cursor:default}
+.modebar{display:flex;gap:7px;flex-wrap:wrap}
+.modebar button.active{background:#dbeafe;color:#10203b;border-color:#93c5fd}
+.progress{height:10px;background:#09101d;border-radius:99px;overflow:hidden;border:1px solid #26334a}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--accent),var(--good));width:0}
+.qmeta{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:12px}
+.qtext{font-size:clamp(20px,4vw,28px);font-weight:800;line-height:1.25;margin:8px 0 18px}
+.options{display:grid;gap:10px}
+.opt{text-align:left;width:100%;padding:13px 14px;background:#111d31;border:1px solid #35445f;border-radius:13px;font-weight:600;line-height:1.35}
+.opt:hover{border-color:#6c86ab}
+.opt.correct{background:#0f332b;border-color:var(--good)}
+.opt.wrong{background:#3a1720;border-color:var(--bad)}
+.feedback{margin-top:14px;padding:14px;border-radius:14px;border:1px solid var(--line);background:#0b1525}
+.feedback.goodfb{border-color:#286c58} .feedback.badfb{border-color:#7f3041}
+.answerline{font-size:17px;font-weight:800;margin-bottom:7px}
+.source{font-size:12px;color:#aabbd2;border-top:1px solid var(--line);margin-top:10px;padding-top:10px}
+.master{display:flex;gap:6px;align-items:center}
+.dot{width:12px;height:12px;border-radius:50%;border:1px solid #60718d;background:transparent}
+.dot.on{background:var(--good);border-color:var(--good)}
+.dot.dead{background:#27344a;border-color:#27344a}
+.tagwrong{color:#fecdd3;background:#401722;border-radius:999px;padding:5px 8px;font-size:11px}
+.tagok{color:#bbf7d0;background:#103427;border-radius:999px;padding:5px 8px;font-size:11px}
+.bigdone{font-size:46px;font-weight:900;color:var(--good)}
+.hidden{display:none!important}
+.table{width:100%;border-collapse:collapse;font-size:13px}
+.table th,.table td{border-bottom:1px solid var(--line);padding:9px 6px;text-align:left;vertical-align:top}
+.barline{height:7px;background:#09101d;border-radius:99px;overflow:hidden;margin-top:5px} .barline i{display:block;height:100%;background:var(--blue)}
+@media(max-width:700px){
+ .grid{grid-template-columns:repeat(2,1fr)} .card{padding:14px;border-radius:15px}
+ .topin{padding:10px 12px} .qtext{font-size:21px} .opt{padding:13px 12px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topin">
+    <div class="brand"><strong>Tag 3 · Recht & QM</strong><span>Adaptives 3×-sicher-Lernsystem</span></div>
+    <div class="pill" id="topProgress">0 / 84 gemeistert</div>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="home">
+  <div class="card">
+    <div class="pill">Morgen · Intensivlernen</div>
+    <h1>Recht & QM – bis es wirklich sitzt</h1>
+    <p class="muted">84 prüfungsnahe Fragen: <b>72 Rechtsfragen aus deinem ursprünglichen Fragenkatalog</b> und <b>12 Fragen aus dem jetzt hochgeladenen QM-Fragenpool</b>. Die Antwortreihenfolge bleibt unverändert, damit Kombinationen wie „Antworten a + b + c“ nicht verfälscht werden.</p>
+    <div class="notice"><b>Lernlogik:</b> Eine Frage verschwindet erst nach <b>3 richtigen Antworten in Folge</b>. Falsche Antworten setzen die Serie auf 0 und die Frage kommt nach wenigen anderen Fragen wieder. Nach dem 1. richtigen Treffer kommt sie später wieder, nach dem 2. Treffer noch später. So frisst das Programm automatisch die Schwachstellen zuerst.</div>
+    <div class="grid" style="margin-top:14px">
+      <div class="stat"><b id="sMaster">0</b><span>gemeistert</span></div>
+      <div class="stat"><b id="sOpen">84</b><span>noch offen</span></div>
+      <div class="stat"><b id="sWeak">0</b><span>Schwachstellen</span></div>
+      <div class="stat"><b id="sAnswers">0</b><span>Antworten gesamt</span></div>
+    </div>
+    <div style="margin-top:14px">
+      <div class="small muted">Gesamtfortschritt</div>
+      <div class="progress"><div id="masterBar"></div></div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="startAll">🔥 Adaptiv alles lernen</button>
+      <button id="startLaw">⚖️ Nur Recht</button>
+      <button id="startQM">📋 Nur QM</button>
+      <button id="startWeak">🎯 Nur Schwachstellen</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>So merkt sich das Programm deinen Lernstand</h2>
+    <p class="muted">Der Fortschritt wird automatisch im Browser gespeichert. Solange du dieselbe GitHub-Pages-Adresse und denselben Browser nutzt, kannst du schließen und später genau dort weitermachen.</p>
+    <div class="actions">
+      <button id="showStats">Lernstand ansehen</button>
+      <button class="danger" id="resetAll">Gesamten Lernstand zurücksetzen</button>
+    </div>
+  </div>
+</section>
+
+<section id="learn" class="hidden">
+  <div class="card">
+    <div class="modebar" id="modebar">
+      <button data-mode="all">Alles</button>
+      <button data-mode="law">Recht</button>
+      <button data-mode="qm">QM</button>
+      <button data-mode="weak">Schwachstellen</button>
+      <button id="homeBtn">← Übersicht</button>
+    </div>
+  </div>
+
+  <div class="card" id="qcard">
+    <div class="qmeta">
+      <div>
+        <div class="pill" id="qlabel"></div>
+        <div class="small muted" id="qcat" style="margin-top:6px"></div>
+      </div>
+      <div>
+        <div class="master" id="dots"></div>
+        <div class="small muted" id="qstats" style="text-align:right;margin-top:5px"></div>
+      </div>
+    </div>
+    <div class="qtext" id="qtext"></div>
+    <div class="options" id="options"></div>
+    <div id="feedback" class="feedback hidden"></div>
+    <div class="actions">
+      <button class="primary hidden" id="nextBtn">Nächste Frage →</button>
+      <button class="danger hidden" id="markWeakBtn">War geraten / unsicher</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div class="stat"><b id="lMaster">0</b><span>gemeistert</span></div>
+      <div class="stat"><b id="lOpen">0</b><span>offen im Modus</span></div>
+      <div class="stat"><b id="lStreak">0/3</b><span>aktuelle Frage</span></div>
+      <div class="stat"><b id="lAcc">0%</b><span>Trefferquote</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="done" class="hidden">
+  <div class="card" style="text-align:center">
+    <div class="bigdone">✓</div>
+    <h1 id="doneTitle">Alles sitzt.</h1>
+    <p class="muted" id="doneText"></p>
+    <div class="actions" style="justify-content:center">
+      <button class="primary" id="doneHome">Zur Übersicht</button>
+      <button id="redoMode">Diesen Bereich neu lernen</button>
+    </div>
+  </div>
+</section>
+
+<section id="statsPanel" class="hidden">
+  <div class="card">
+    <div class="qmeta"><h2>Lernstand im Detail</h2><button id="closeStats">Schließen</button></div>
+    <div id="statsContent"></div>
+  </div>
+</section>
+</main>
+
+<script>
+const QUESTIONS = [{"uid":"R1","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 1","question":"Welche Prüfungsschritte müssen regelmäßig bei einem vorsätzlichen Begehungsdelikt aus dem StGB, z.B. Körperverletzung, geprüft werden?","options":["Objektiver und subjektiver Tatbestand, Rechtswidrigkeit, Schuld","Objektiver und subjektiver Tatbestand, Garantenstellung, Rechtswidrigkeit, Schuld","Rechtswidrigkeit und Schuld","Objektiver und subjektiver Tatbestand, Rechtswidrigkeit","Objektiver und subjektiver Tatbestand, Quasi-Kausalität, Rechtswidrigkeit, Schuld"],"correct":0,"explanation":"Ein vorsätzliches Begehungsdelikt wird regelmäßig in Tatbestand, Rechtswidrigkeit und Schuld geprüft. Zum Tatbestand gehören die objektiven und subjektiven Merkmale.","source":"Schriftliche Fragen Recht, Originalfrage 1, PDF-Seite 1. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R2","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 2","question":"Welche sind die typischen Rechtfertigungsgründe bzw. ist ein typischer Rechtfertigungsgrund des Strafrechts?","options":["Rechtfertigender Notstand","Notwehr","Rücktritt vom Versuch","Antworten a + b","Antworten a + b + c"],"correct":3,"explanation":"Notwehr und rechtfertigender Notstand sind Rechtfertigungsgründe. Der Rücktritt vom Versuch beseitigt dagegen nicht die Rechtswidrigkeit einer bereits verwirklichten Tat.","source":"Schriftliche Fragen Recht, Originalfrage 2, PDF-Seite 1. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R3","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 3","question":"Welche der folgenden Aussagen sind richtig? Der Rettungsdienst hat eine Garantenstellung, weil…","options":["…dies in den Rettungsdienstgesetzen der Länder so ausdrücklich geregelt ist","…während der Dienstzeit im Rahmen der Gefahrenabwehr","…weil der ZRF dies verträglich zusichert","…lediglich für Patienten, die minderjährig oder bewusstlos sind","…in erster Linie für den Notarzt und am Einsatz beteiligten Kollegen"],"correct":1,"explanation":"Rettungsdienstpersonal übernimmt während des Dienstes Aufgaben der Gefahrenabwehr und besitzt dadurch Schutz- und Handlungspflichten gegenüber den zu versorgenden Personen.","source":"Schriftliche Fragen Recht, Originalfrage 3, PDF-Seite 1. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R4","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 4","question":"Eine strafrechtliche Garantenstellung ist regelmäßig anzuwenden zwischen:","options":["Eltern und ihren Kindern","Schicksalsgemeinschaften, z.B. Bergsteigern","Ehepartnern","Keine der Antworten ist richtig","Antworten a + b + c sind richtig"],"correct":4,"explanation":"Garantenstellungen können insbesondere aus engen familiären Beziehungen oder einer freiwillig übernommenen Gefahrengemeinschaft entstehen.","source":"Schriftliche Fragen Recht, Originalfrage 4, PDF-Seite 1. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R5","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 5","question":"Eine invasive Maßnahme im Rettungsdienst stellt Tatbestandsmäßig regelmäßig eine:","options":["Versuchte Körperverletzung dar","Fahrlässige Körperverletzung dar","Schwere Körperverletzung mittels gemeingefährlicher Mittel dar","Vorsätzliche Körperverletzung dar","Körperverletzung durch Unterlassen dar"],"correct":3,"explanation":"Ein medizinischer Eingriff erfüllt tatbestandlich grundsätzlich eine vorsätzliche Körperverletzung. Straflos wird er erst durch eine wirksame Rechtfertigung, insbesondere die Einwilligung.","source":"Schriftliche Fragen Recht, Originalfrage 5, PDF-Seite 1. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R6","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 6","question":"Macht sich der Notfallsanitäter bei eigenverantwortlich durchgeführten invasiven Maßnahmen nach dem Heilpraktikergesetz §§1,5 strafbar?","options":["Nein, sofern die Voraussetzungen des §34 StGB vorliegen","Nein, durch den Pyramidenprozess ist genau geklärt was er invasiv durchführen darf oder nicht","Nein, sofern die Voraussetzungen des §2a NotSanG vorliegen","Ja, die Notkompetenz mit dem NotSanG abgeschafft worden ist","Antworten a + c sind richtig"],"correct":4,"explanation":"Nach dem Lösungsschlüssel ist die heilkundliche Maßnahme entweder über den rechtfertigenden Notstand oder bei Vorliegen der gesetzlichen Voraussetzungen über § 2a NotSanG legitimierbar.","source":"Schriftliche Fragen Recht, Originalfrage 6, PDF-Seite 1. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R7","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 7","question":"Wie macht man sich im Dienst strafbar, wenn man einen Patienten mit Knieluxation bewusst nicht behandelt, weil er bspw. unsympathisch ist und dieser in der Folge einen Schaden des Knies erleidet?","options":["Misshandlung Schutzbefohlener","Körperverletzung durch Unterlassen gemäß §§223,13 StGB","Versuchte Körperverletzung","Keine der genannten Straftaten","Alle der genannten Straftaten"],"correct":1,"explanation":"Wer als Garant eine erforderliche Behandlung bewusst unterlässt und dadurch einen Gesundheitsschaden verursacht, kann sich wegen Körperverletzung durch Unterlassen strafbar machen.","source":"Schriftliche Fragen Recht, Originalfrage 7, PDF-Seite 2. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R8","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 8","question":"Unter die Schweigepflicht fällt:","options":["Der Name des Patienten","Vorerkrankungen und Unfallhergang","Die durchgeführten Maßnahmen","Die Wohn- und Lebenssituation des Patienten","Alle Antworten sind richtig"],"correct":4,"explanation":"Die Schweigepflicht umfasst nicht nur Diagnosen, sondern sämtliche anvertrauten oder im Einsatz bekannt gewordenen persönlichen und medizinischen Informationen.","source":"Schriftliche Fragen Recht, Originalfrage 8, PDF-Seite 2. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R9","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 9","question":"Welche der folgenden Aussagen ist richtig? Strafrechtlich kann der Notfallsanitäter belangt werden für:","options":["Nur vorsätzliches Handeln","Nur vorsätzliches und grob fahrlässiges Verhalten","Je nach Straftatbestand vorsätzliches und fahrlässiges Verhalten","Kein Fehlverhalten, da zunächst der ZRF bzw. Arbeitgeber vom Staatsanwalt verantwortlich gemacht wird","Kein schuldhaftes Verhalten, da er über §34 StGB gerechtfertigt ist"],"correct":2,"explanation":"Ob Vorsatz oder Fahrlässigkeit strafbar ist, richtet sich nach dem jeweiligen Straftatbestand. Im Rettungsdienst kommen beide Formen in Betracht.","source":"Schriftliche Fragen Recht, Originalfrage 9, PDF-Seite 2. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R10","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 10","question":"Wo ist niedergelegt, dass der Arzt den Patientenwillen zu berücksichtigen hat?","options":["§25 BGB","§142 BGB","§630d BGB","§13a BGB","§323c BGB"],"correct":2,"explanation":"§ 630d BGB regelt die Einwilligung in medizinische Maßnahmen und verpflichtet den Behandelnden, den Patientenwillen zu beachten.","source":"Schriftliche Fragen Recht, Originalfrage 10, PDF-Seite 2. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R11","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 11","question":"Kann sich ein Notfallsanitäter auch strafbar machen, wenn er unter den Voraussetzungen des §2a NotSanG eigenverantwortlich invasive Maßnahmen durchführt? 18","options":["Nein, durch die Einführung des §2a NotSanG sind alle Strafbarkeitsrisiken beseitigt worden","Ja, wenn er die Maßnahmen ohne Aufklärung und (mutmaßliche) Einwilligung des Patienten durchführt (Körperverletzung)","Ja, wenn er die Maßnahmen nicht korrekt durchführt und der Patient dadurch einen Gesundheitsschaden erleidet oder stirbt (Fahrlässige Körperverletzung oder Tötung)","Nein, sofern er vorher einen Notarzt nachalarmiert hat","Antworten b + c sind richtig"],"correct":4,"explanation":"§ 2a NotSanG ersetzt weder die notwendige Aufklärung und Einwilligung noch die Pflicht zur fachgerechten Durchführung. Fehler können daher weiterhin strafrechtliche Folgen haben.","source":"Schriftliche Fragen Recht, Originalfrage 11, PDF-Seite 2. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R12","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 12","question":"Was sind Ausnahmen zur Schweigepflicht? 19","options":["Die Einwilligung des Patienten","Die Anzeige geplanter schwerer Straftaten wie Mord, Raub, Terrorangriffe, Menschenhandel","Die Anzeige meldepflichtiger Erkrankungen im Rahmen des Dienstweges","Rechtfertigender Notstand","Alle Antworten sind korrekt"],"correct":4,"explanation":"Die Schweigepflicht kann unter anderem durch Einwilligung, besondere gesetzliche Meldepflichten oder einen rechtfertigenden Notstand durchbrochen werden.","source":"Schriftliche Fragen Recht, Originalfrage 12, PDF-Seite 3. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R13","domain":"Recht","category":"Strafrecht & Schweigepflicht","label":"Recht · Originalfrage 13","question":"Nach einem Verkehrsunfall hat wer daran beteiligt ist:","options":["Unverzüglich zu halten","Den Verkehr zu sichern","Sich über die Unfallfolgen zu vergewissern","Verletzten zu helfen","Alle Antworten sind korrekt"],"correct":4,"explanation":"Nach einem Verkehrsunfall bestehen Halte-, Sicherungs-, Feststellungs- und Hilfeleistungspflichten.","source":"Schriftliche Fragen Recht, Originalfrage 13, PDF-Seite 3. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R14","domain":"Recht","category":"Arbeits- & Gesundheitsschutz","label":"Recht · Originalfrage 14","question":"Was gehört zu den Pflichten des Arbeitgebers?","options":["Ausreichende und angemessene Unterweisung der Beschäftigten während der Arbeitszeit über Sicherheit und Gesundheitsschutz","Erforderliche Maßnahmen des Arbeitsschutzes unter Berücksichtigung der Umstände zu treffen, die die Sicherheit und Gesundheit der Beschäftigten bei der Arbeit beeinflussen","Ermöglichung des Wunsches des Arbeitnehmers an regelmäßigen gesundheitlichen Untersuchungen teilnehmen zu können","Antworten b + c sind korrekt","Antworten a + b + c sind korrekt"],"correct":4,"explanation":"Der Arbeitgeber muss Beschäftigte unterweisen, erforderliche Schutzmaßnahmen treffen und arbeitsmedizinische Vorsorge im gesetzlichen Rahmen ermöglichen.","source":"Schriftliche Fragen Recht, Originalfrage 14, PDF-Seite 3. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R15","domain":"Recht","category":"Arbeits- & Gesundheitsschutz","label":"Recht · Originalfrage 15","question":"Welche Bereiche werden durch die Arbeitsstättenverordnung geregelt?","options":["Mindestanforderung an Pausen- und Bereitschaftsräume","Ausstattung der Rettungsmittel (NEF, RTW, KTW)","Persönliche Schutzausrüstung","Schutz gegen unzuträgliche Einwirkungen (Lärm, Geruch, usw.)","Antworten a + d sind korrekt"],"correct":4,"explanation":"Die Arbeitsstättenverordnung enthält unter anderem Anforderungen an Pausen- und Bereitschaftsräume sowie an den Schutz vor unzuträglichen Umwelteinwirkungen.","source":"Schriftliche Fragen Recht, Originalfrage 15, PDF-Seite 3. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R16","domain":"Recht","category":"Arbeits- & Gesundheitsschutz","label":"Recht · Originalfrage 16","question":"Wie lange vor der Entbindung dürfen gemäß §3, Abs 2 MuSchG werdende Mütter nicht beschäftigt werden?","options":["4 Wochen","8 Wochen","12 Wochen","6 Wochen","24 Wochen"],"correct":3,"explanation":"Die reguläre Schutzfrist vor der Entbindung beträgt sechs Wochen. Eine Beschäftigung ist in dieser Zeit nur unter den gesetzlichen Voraussetzungen möglich.","source":"Schriftliche Fragen Recht, Originalfrage 16, PDF-Seite 3. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R17","domain":"Recht","category":"Arbeits- & Gesundheitsschutz","label":"Recht · Originalfrage 17","question":"Was sind die wichtigsten Regelungen des sozialen Arbeitsschutzes?","options":["Arbeitszeitrecht","Schwerbehindertenschutzrecht","Frauenarbeitsschutzrecht","Arbeitsplatzrecht","Antworten a + b + c sind korrekt"],"correct":4,"explanation":"Zum sozialen Arbeitsschutz zählen insbesondere Arbeitszeitrecht, Schutz schwerbehinderter Menschen und Mutterschutz beziehungsweise Frauenarbeitsschutz.","source":"Schriftliche Fragen Recht, Originalfrage 17, PDF-Seite 3. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R18","domain":"Recht","category":"Arbeits- & Gesundheitsschutz","label":"Recht · Originalfrage 18","question":"Wie hoch ist die im saarländischen Rettungsdienstgesetz verankerte jährliche Fortbildungszeit für Notfallsanitäter?","options":["Min. 30 Stunden","30 Stunden","Höchstens 30 Stunden","Min. 40 Stunden","50 Stunden"],"correct":0,"explanation":"Der vorgegebene Lösungsschlüssel nennt für Notfallsanitäter im saarländischen Rettungsdienst eine jährliche Fortbildungszeit von mindestens 30 Stunden.","source":"Schriftliche Fragen Recht, Originalfrage 18, PDF-Seite 4. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R19","domain":"Recht","category":"Rettungsdienst- & Berufsrecht","label":"Recht · Originalfrage 19","question":"Welche Aussage ist bzw. welche Aussagen sind korrekt?","options":["Die Hilfsfrist ist bundeseinheitlich auf 12 Minuten festgelegt","Die Hilfsfrist umfasst im Allgemeinen das therapiefreie Intervall vom Eingang der Notrufmeldung bis zum Eintreffen des Rettungsmittels","Im Notarztdienst werden Stations- oder Rendez-vous-Systeme verwendet","Der Rettungsdienstträger trifft durch Vereinbarungen mit den Krankenhäusern Vorsorge, dass dort Ärzte für die Besetzung der erforderlichen Notarztsysteme einsatzbereit sind","Antworten b + c sind korrekt"],"correct":4,"explanation":"Nach dem bereitgestellten Schlüssel beschreibt die Hilfsfrist grundsätzlich das therapiefreie Intervall; im Notarztdienst kommen Stations- und Rendezvous-Systeme vor.","source":"Schriftliche Fragen Recht, Originalfrage 19, PDF-Seite 4. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R20","domain":"Recht","category":"Rettungsdienst- & Berufsrecht","label":"Recht · Originalfrage 20","question":"Unter welche Regelungskompetenz fällt die Organisation und Ausgestaltung des Rettungswesens?","options":["Kommunen","Bundesländer","Bund- und Länderausschuss Rettungswesen","Bund","Örtliche Gemeindeverwaltung"],"correct":1,"explanation":"Organisation und Ausgestaltung des Rettungsdienstes gehören grundsätzlich zur Gesetzgebungskompetenz der Bundesländer.","source":"Schriftliche Fragen Recht, Originalfrage 20, PDF-Seite 4. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R21","domain":"Recht","category":"Rettungsdienst- & Berufsrecht","label":"Recht · Originalfrage 21","question":"Was wird in §4, Abs II, Nr. 2c NotSanG geregelt?","options":["Angemessenes Umgehen mit Menschen in Krisen- und Notfallsituationen","Herstellen und Sicherstellen der Transportfähigkeit der Patientinnen und Patienten im Notfalleinsatz","Eigenständiges Durchführen von heilkundlichen Maßnahmen, die vom ÄLRD oder entsprechend verantwortlichen Ärztinnen und Ärzten bei bestimmten notfallmedizinischen Zustandsbildern und -situationen standardmäßig vorgegeben, überprüft und verantwortet werden.","Assistieren bei der ärztlichen Notfall- und Akutversorgung von Patientinnen und Patienten im Notfalleinsatz","eigenständiges Durchführen ärztlich veranlasster Maßnahmen bei Patientinnen und Patienten im Notfalleinsatz"],"correct":2,"explanation":"§ 4 Absatz 2 Nummer 2c NotSanG betrifft standardmäßig ärztlich vorgegebene, überprüfte und verantwortete heilkundliche Maßnahmen.","source":"Schriftliche Fragen Recht, Originalfrage 21, PDF-Seite 4. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R22","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 22","question":"Der Begriff „Recht“ umfasst die Gesamtheit der geltenden Normen, dabei unterscheidet man klassischerweise zwischen:","options":["Öffentlichem Recht, Zivilrecht, Strafrecht","Novarecht, Bundesrecht, Kommunalrecht","Zivilrecht, Strafrecht, Arbeitsrecht","Nachbarschaftsrecht, Strafrecht, Ordnungswidrigkeitenrecht","Völkerrecht, Europarecht, Landesrecht"],"correct":0,"explanation":"Die klassische Grundgliederung unterscheidet öffentliches Recht, Zivilrecht und Strafrecht.","source":"Schriftliche Fragen Recht, Originalfrage 22, PDF-Seite 4. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R23","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 23","question":"Das Grundgesetz unterscheiden bei den Grundrechten zwischen:","options":["Menschen- und Bürgerrechten","Freiheits- und Gleichheitsrechten","Individual- und kollektivrechten","Antworten a + b + c sind richtig","Antworten a + b sind richtig"],"correct":4,"explanation":"Grundrechte werden unter anderem als Menschen- oder Bürgerrechte sowie als Freiheits- oder Gleichheitsrechte eingeordnet.","source":"Schriftliche Fragen Recht, Originalfrage 23, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R24","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 24","question":"Welche drei Elemente gehören nach der Drei-Elemente-Lehre von Jellinek zu einem Staat?","options":["Staatsgebiet, Staatsvolk und Staatsgewalt","Staatsregierung, Staatsreligion und Staatswährung","Bundestag, Bundesrat und Bundesregierung","Verfassung, Staatsangehörigkeit und Amtssprache"],"correct":0,"explanation":"Nach der Drei-Elemente-Lehre setzt ein Staat Staatsgebiet, Staatsvolk und eine wirksame Staatsgewalt voraus.","source":"Schriftliche Fragen Recht, Originalfrage 24, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R25","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 25","question":"Welches ist kein klassisches, unabänderliches Staatsprinzip des Grundgesetzes?","options":["Republikprinzip","Demokratieprinzip","Bundesstaatsprinzip","Völkerrechtsprinzip","Sozialstaatsprinzip"],"correct":3,"explanation":"Republik, Demokratie, Bundesstaat, Rechtsstaat und Sozialstaat gehören zu den tragenden Staatsstrukturprinzipien; ein eigenständiges Völkerrechtsprinzip zählt nicht zu dieser klassischen Aufzählung.","source":"Schriftliche Fragen Recht, Originalfrage 25, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R26","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 26","question":"Welche Aussage im Hinblick auf das Bund-Länder-Verhältnis im Grundgesetz ist richtig?","options":["Die Länder haben das Recht der Gesetzgebung, soweit das Grundgesetz nicht dem Bunde Gesetzgebungskompetenzen gibt.","Bundesrecht bricht Landesrecht","Der Bund hat das Recht der Gesetzgebung, soweit das Grundgesetz nicht in den Ländern Gesetzgebungskompetenzen gibt","Antworten a + b sind richtig","Antworten b + c sind richtig"],"correct":3,"explanation":"Grundsätzlich besitzen die Länder die Gesetzgebungskompetenz, soweit sie dem Bund nicht zugewiesen ist. Außerdem gilt der Vorrang des Bundesrechts vor entgegenstehendem Landesrecht.","source":"Schriftliche Fragen Recht, Originalfrage 26, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R27","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 27","question":"Welche Aussagen im Hinblick auf die deutsche Verwaltung sind richtig:","options":["Die Verwaltungszuständigkeit ist grundsätzlich Ländersache","Die Verwaltungszuständigkeit ist grundsätzlich Bundessache","Die Verwaltungszuständigkeit ist grundsätzlich auf kommunaler Ebene","Die Europäische Union benötigt für die Umsetzung Ihrer Rechtsvorschriften keinerlei nationale Verwaltungsbehörden, da die EU eine umfangreiche eigene Verwaltung hat","Antworten b + d sind richtig"],"correct":0,"explanation":"Die Ausführung von Gesetzen und die allgemeine Verwaltung sind im föderalen System grundsätzlich Aufgabe der Länder.","source":"Schriftliche Fragen Recht, Originalfrage 27, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R28","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 28","question":"Der Rettungsdienst ist ein Teil der Gefahrenabwehr. Welche anderen Institutionen sind für die Gefahrenabwehr mit verantwortlich?","options":["Landespolizei","Feuerwehr","Bundespolizei","Antworten a + b + c sind richtig","Antworten a + b sind richtig"],"correct":3,"explanation":"Gefahrenabwehr wird nicht nur durch den Rettungsdienst, sondern auch durch Landespolizei, Bundespolizei und Feuerwehr wahrgenommen.","source":"Schriftliche Fragen Recht, Originalfrage 28, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R29","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 29","question":"Welche Aussage ist falsch?","options":["Die Bundesrepublik hat 16 Bundesländer","Bei der Regierungsform der BRD handelt es sich um eine parlamentarische Demokratie","Der Gegenbegriff zu Republik ist Diktatur","Die BRD wurde im Jahr 1949 gegründet","Wichtige Elemente der Demokratie sind u.a. die Meinungs- und Versammlungsfreiheit"],"correct":2,"explanation":"Der Gegenbegriff zur Republik ist die Monarchie, nicht die Diktatur. Daher ist diese Aussage falsch.","source":"Schriftliche Fragen Recht, Originalfrage 29, PDF-Seite 5. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R30","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 30","question":"Welche Aussage zum NotSanG ist richtig?","options":["Das NotSanG fällt wie nahezu alle Berufszulassungsgesetze in die Gesetzgebungskompetenz des Bundes","Das NotSanG ist wegen einer Entscheidung des Bundesverfassungsgerichtes verabschiedet worden","Hauptziel des NotSanG ist es, die Strukturen des Rettungsdienstes neu zu organisieren","Das Rettungsassistentengesetz hat nach Einführung des NotSanG keinerlei Bedeutung mehr","Das NotSanG wurde zuerst von Bayern und Rheinland-Pfalz verabschiedet, bevor die anderen Bundesländer nachgezogen sind."],"correct":0,"explanation":"Das NotSanG ist ein bundesrechtliches Berufszulassungs- und Ausbildungsgesetz.","source":"Schriftliche Fragen Recht, Originalfrage 30, PDF-Seite 6. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R31","domain":"Recht","category":"Staats- & Verwaltungsrecht","label":"Recht · Originalfrage 31","question":"Welche Aussage zum Saarländischen Rettungsdienstgesetz (SRettG) ist falsch?","options":["Das SRettG fällt als Teil des Gefahrenabwehrrechtes in die Gesetzkompetenz des Landes","Das SRettG regelt die Notfallrettung und den Krankentransport als öffentliche Aufgabe (Rettungsdienst)","Das SRettG ist Ausfluss der Umsetzung der EU Rettungsdeinst-Richtlinie, die europaweit einheitliche Standards für den Rettungsdienst regelt","Das SRettG regelt die Zulassung von Unternehmern und Unternehmerinnen zum Krankentransport","Das SRettG regelt unter anderem die Besetzung der Rettungsdienstfahrzeuge mit geeignetem Personal"],"correct":2,"explanation":"Eine europaweit einheitliche EU-Rettungsdienstrichtlinie, deren bloße Umsetzung das SRettG wäre, existiert nach dem Lösungsschlüssel nicht; die Aussage ist deshalb falsch.","source":"Schriftliche Fragen Recht, Originalfrage 31, PDF-Seite 6. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R32","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 32","question":"Sie transportieren eine minderjährige Patientin. Welche Aussage trifft zu?","options":["Ein Transport ohne die Eltern ist unzulässig","Der Wille des Patienten ist immer zentral","Es besteht ein Anspruch auf Kostentragung durch eine Geschäftsführung ohne Auftrag","Es kommt ein Quasivertrag zu Stande","Antworten c + d treffen zu"],"correct":4,"explanation":"Bei Minderjährigen können ein gesetzlich vertretener Vertrag oder bei dringlichem Handeln ein gesetzliches Schuldverhältnis im Rahmen der Geschäftsführung ohne Auftrag entstehen.","source":"Schriftliche Fragen Recht, Originalfrage 32, PDF-Seite 6. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R33","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 33","question":"Was bedeutet Geschäftsfähigkeit?","options":["Rechtsfähigkeit der Person","Strafbarkeit der Person","Die Fähigkeit Rechtsgeschäfte wirksam vorzunehmen","Die Fähigkeit Handelsgeschäfte abzuschließen","Die Fähigkeit eine Firma zu führen"],"correct":2,"explanation":"Geschäftsfähigkeit ist die Fähigkeit, selbst wirksame Rechtsgeschäfte vorzunehmen.","source":"Schriftliche Fragen Recht, Originalfrage 33, PDF-Seite 6. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R34","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 34","question":"Ein Notfallsanitäter führt eine medizinische indizierte invasive Maßnahme durch. Hat er sich strafbar gemacht?","options":["Ja, in jedem Fall","Ja, er hat mindestens den Tatbestand der Körperverletzung verwirklicht","Er hat mindestens den Tatbestand der Körperverletzung verwirklicht, kann aber über die Einwilligung bzw. den rechtfertigenden Notstand §34 StGB gerechtfertigt sein","Nein, die medizinische Indikation schließt die Strafe aus","Nein, die Maßnahme ist über den entschuldigenden Notstand, §35 StGB, entschuldigt"],"correct":2,"explanation":"Auch ein medizinisch indizierter Eingriff erfüllt zunächst den Körperverletzungstatbestand. Eine wirksame Einwilligung oder ein Rechtfertigungsgrund kann die Rechtswidrigkeit entfallen lassen.","source":"Schriftliche Fragen Recht, Originalfrage 34, PDF-Seite 6. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R35","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 35","question":"Ein Notfallsanitäter könnte sich sowohl auf eigene Kompetenzen als auch auf eine einschlägige Verfahrensanweisung berufen. Was ist nach dem Fragenkatalog vorrangig?","options":["Die einschlägige Verfahrensanweisung","Immer ausschließlich § 2a NotSanG","Die persönliche Präferenz des Notfallsanitäters","Eine ältere, nicht mehr gültige Dienstanweisung"],"correct":0,"explanation":"Ist eine einschlägige standardisierte ärztliche Verfahrensanweisung vorhanden, ist nach dem bereitgestellten Schlüssel vorrangig nach dieser Vorgabe zu handeln.","source":"Schriftliche Fragen Recht, Originalfrage 35, PDF-Seite 7. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R36","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 36","question":"Welche dieser Aussagen zur Vorschrift des §2a treffen zu?","options":["Die zulässigen Maßnahmen müssen durch den Notarzt in einer Verfahrensanweisung freigegeben sein","Im Anwendungsbereich des §2a wird der Notfallsanitäter dem Notarzt gleichgestellt. Alles was er darf, darf auch der NotSan ersatzweise tun","Die Vorschrift gestattet dem NotSan die Vornahme auch invasiver Behandlungsmaßnahmen, ohne gegen den Arztvorbehalt aus §1 Heilpraktikergesetz zu verstoßen.","Die Maßnahme muss erforderlich sein, um Lebensgefahr oder wesentliche gesundheitliche Folgeschäden vom Patienten abzuwenden. Der NotSan muss die Maßnahme erlernt haben und beherrschen und schließlich muss der Patient schnellstmöglich einer ärztlichen Behandlung zugeführt werden.","Antworten c + d sind richtig"],"correct":4,"explanation":"§ 2a NotSanG erlaubt unter engen Voraussetzungen auch invasive Maßnahmen außerhalb des Heilpraktikervorbehalts, wenn sie erlernt, beherrscht und zur Abwendung erheblicher Gefahren erforderlich sind.","source":"Schriftliche Fragen Recht, Originalfrage 36, PDF-Seite 7. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R37","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 37","question":"Ein Notfallsanitäter handelt rechtmäßig auf Grundlage von §2a NotSanG, um Lebensgefahr oder wesentliche Folgeschäden vom Patienten abzuwenden. Welche Antworten sind in diesem Falle bezogen auf das Erfordernis der Mitwirkung eines (Not-)Arztes zutreffend?","options":["In Ausnahmefällen (Z.B. unmittelbar nahegelegenes Krankenhaus) kann die Zuführung zu einer ärztlichen Weiterbehandlung fernab der Einsatzstelle ausreichend sein","Wenn ein Notarzt alarmiert wurde, ist in jedem Falle auf dessen Eintreffen zu warten","Ausweislich des Wortlauts der Vorschrift dient die Maßnahme nur zur Überbrückung der Zeit bis zum Eintreffen eines Notarztes, dieser ist also ggf. nachzualarmieren","Abgesehen von extrem zeitkritischen Fällen ist eine Abstimmung mit dem auf Anfahrt befindlichen Notarzt empfehlenswert","Antworten a + c + d sind richtig"],"correct":4,"explanation":"Maßnahmen nach § 2a NotSanG überbrücken die Zeit bis zu ärztlicher Versorgung. Je nach Lage sind Nachalarmierung, Abstimmung oder direkte Zuführung zur ärztlichen Behandlung erforderlich.","source":"Schriftliche Fragen Recht, Originalfrage 37, PDF-Seite 7. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R38","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 38","question":"Welche invasive Maßnahme darf der NotSan treffen?","options":["Jegliche Maßnahmen, die Leib und Leben retten","Heilkundliche Maßnahmen, die erlernt und beherrscht sind, sowie zur Abwendung einer Lebensgefahr oder wesentlichen gesundheitlichen Folgeschäden erforderlich sind bis zur Übernahme einer ärztlichen Versorgung, sofern kein Arzt anwesend ist und keine VAW einschlägig ist.","Heilkundliche Maßnahmen, die vom ÄLRD vorgegeben sind, überprüft und verantwortet werden","Heilkundliche Maßnahmen","Antworten b + c sind richtig"],"correct":4,"explanation":"Notfallsanitäter dürfen sowohl standardisiert vorgegebene Maßnahmen als auch unter den gesetzlichen Voraussetzungen erforderliche, erlernte und beherrschte Maßnahmen durchführen.","source":"Schriftliche Fragen Recht, Originalfrage 38, PDF-Seite 7. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R39","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 39","question":"Was regelt das NotSanG unmittelbar?","options":["Die Kompetenz des NotSan","Die Haftung des NotSan","Die Ausbildung des NotSan","Das Gehalt des NotSan","Antworten a + b sind richtig"],"correct":2,"explanation":"Das NotSanG regelt unmittelbar vor allem die Ausbildung und Erlaubnis zum Führen der Berufsbezeichnung, nicht die vollständige rettungsdienstliche Organisationsstruktur.","source":"Schriftliche Fragen Recht, Originalfrage 39, PDF-Seite 7. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R40","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 40","question":"Wann kann die zuständige Behörde einem NotSan gegenüber die Erlaubnis zum Führen der Berufsbezeichnung widerrufen?","options":["Wenn 1 Jahr lang kein Dienst als NotSan ausgeführt wurde","Wenn der NotSan in gesundheitlicher Hinsicht zur Ausübung des Berufes nicht mehr geeignet ist.","Wenn der NotSan sich eines Verhaltens schuldig gemacht hat, aus dem sich Unzuverlässigkeit zur Ausübung des Berufs ergibt","Wenn die jährlich erforderliche Fortbildung im Umfang von 30 Stunden nicht geleistet wurde","Antworten b + c sind richtig"],"correct":4,"explanation":"Die Berufserlaubnis kann insbesondere bei gesundheitlicher Ungeeignetheit oder berufsbezogener Unzuverlässigkeit widerrufen werden.","source":"Schriftliche Fragen Recht, Originalfrage 40, PDF-Seite 8. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R41","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 41","question":"Darf ein Notfallsanitäter eine Person vorläufig festhalten, wenn die gesetzlichen Voraussetzungen des § 127 StPO vorliegen?","options":["Ja, im Rahmen des allgemeinen Festnahmerechts nach § 127 StPO","Nein, ein Festhalten ist ausschließlich Polizeibeamten gestattet","Ja, aber nur nach vorheriger richterlicher Genehmigung","Nein, selbst bei Betreffen auf frischer Tat ist dies ausgeschlossen"],"correct":0,"explanation":"§ 127 StPO erlaubt eine vorläufige Festnahme durch jedermann nur unter seinen gesetzlichen Voraussetzungen, insbesondere bei Betreffen oder Verfolgen auf frischer Tat und zusätzlichem Festnahmegrund.","source":"Schriftliche Fragen Recht, Originalfrage 41, PDF-Seite 8. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R42","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 42","question":"Kommt mit einem minderjährigen Patienten ein Behandlungsvertrag zu Stande?","options":["Ja, wenn die Eltern einwilligen oder nachträglich genehmigen","Ja, ein Quasivertrag über die Geschäftsführung ohne Auftrag","Nein, ein Minderjähriger ist geschäftsunfähig und kann daher nicht Vertragspartei sein","Ja, mit Zustimmung der Krankenkasse","Antworten a + b sind richtig"],"correct":4,"explanation":"Bei einem Minderjährigen kann ein Vertrag über die gesetzlichen Vertreter zustande kommen; bei dringlicher Behandlung kann außerdem eine Geschäftsführung ohne Auftrag vorliegen.","source":"Schriftliche Fragen Recht, Originalfrage 42, PDF-Seite 8. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R43","domain":"Recht","category":"Kompetenz, Einwilligung & Geschäftsfähigkeit","label":"Recht · Originalfrage 43","question":"Mit welchem Alter beginnt grundsätzlich die volle Geschäftsfähigkeit?","options":["Mit Vollendung des 18. Lebensjahres","Mit Vollendung des 16. Lebensjahres","Mit Vollendung des 21. Lebensjahres","Mit Beginn einer Berufsausbildung"],"correct":0,"explanation":"Mit Vollendung des 18. Lebensjahres beginnt grundsätzlich die unbeschränkte Geschäftsfähigkeit.","source":"Schriftliche Fragen Recht, Originalfrage 43, PDF-Seite 8. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R44","domain":"Recht","category":"Sonder-, Wege- & Verkehrsrecht","label":"Recht · Originalfrage 44","question":"Welche der folgenden Aussagen ist richtig?","options":["Bei der Inanspruchnahme von Sonder- und Wegerechten sind die Vorschriften der StVO voraussetzungslos aufgehoben","Muss ich sicherstellen, dass die anderen Verkehrsteilnehmer meine Bevorrechtigung erkannt haben und mir Vorfahrt gewähren","Muss ich mich nicht anschnallen","Ist die Überschreitung der Höchstgeschwindigkeit um das doppelte in jedem Fall zulässig","Antworten b + c sind richtig"],"correct":4,"explanation":"Auch bei Sonderrechten bleibt der Fahrer zu besonderer Vorsicht verpflichtet. Nach dem Lösungsschlüssel kann zudem eine Befreiung von der Anschnallpflicht in der konkreten Einsatzsituation erfasst sein.","source":"Schriftliche Fragen Recht, Originalfrage 44, PDF-Seite 8. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R45","domain":"Recht","category":"Sonder-, Wege- & Verkehrsrecht","label":"Recht · Originalfrage 45","question":"Welche Antworten sind richtig: Wenn ich auf der Einsatzfahrt einen VU verursache…","options":["…muss ich zunächst aussteigen und begutachten ob und welcher Schaden verursacht wurde","…muss ich die Leitstelle informieren","…darf ich weiterfahren, wenn nach 1 Minute niemand erscheint der betroffen ist","…darf ich weiterfahren, wenn keine Person verletzt ist und bei Abdeckung der betroffenen Rechtsgüter namentlich des Grades der ihm drohenden Gefahr und Umständen des Einzelfalls die Rettung des Patienten andernfalls zu scheitern droht, in diesem Fall muss ich die Polizei verständigen.","Antworten a + b + d sind richtig"],"correct":4,"explanation":"Nach einem selbst verursachten Unfall müssen Lage und Schaden geprüft und die Leitstelle informiert werden. Eine Weiterfahrt kommt nur in einer eng begrenzten Notstandslage mit zusätzlicher Verständigung der Polizei in Betracht.","source":"Schriftliche Fragen Recht, Originalfrage 45, PDF-Seite 8. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R46","domain":"Recht","category":"Sonder-, Wege- & Verkehrsrecht","label":"Recht · Originalfrage 46","question":"Sie fahren mit dem RTW mit Blaulicht und Martinshorn auf eine Kreuzung zu. Die Ampel zeigt für sie Rotlicht. Welche Antworten oder Antworten beschreibt das für sie in dieser Situation korrekte Verhalten?","options":["Sie schalten rechtzeitig vor Erreichen der Kreuzung das Einsatzhorn ein, sofern es nicht schon eingeschaltet ist","Zur Nachtzeit ist das Befahren einer Kreuzung ohne Einsatzhorn immer zulässig","Ich muss damit rechnen, dass andere Verkehrsteilnehmer plötzlich beschleunigen oder nicht vorsichtig (?) unterwegs sind","Antworten a + c sind richtig","Um andere Verkehrsteilnehmer nicht zu verwirren, ist vom Blinker kein Gebrauch zu machen"],"correct":3,"explanation":"Beim Einfahren in eine rote Kreuzung sind Einsatzhorn und Blaulicht rechtzeitig einzusetzen; zugleich ist mit Fehlreaktionen anderer Verkehrsteilnehmer zu rechnen.","source":"Schriftliche Fragen Recht, Originalfrage 46, PDF-Seite 9. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R47","domain":"Recht","category":"Sonder-, Wege- & Verkehrsrecht","label":"Recht · Originalfrage 47","question":"Welche Konsequenzen drohen dem Fahrer, wenn er unter Einfluss von Alkohol das Fahrzeug führt?","options":["Solange zwischen Trinkende und Fahrt 8 Stunden vergangen sind drohen keine Konsequenzen","Es drohen Berufsrechtliche Konsequenzen, bis hin zum Widerruf der Erlaubnis als NotSan arbeiten zu dürfen","Es drohen eine Geldbuße und ein Fahrverbot","Es drohen ein Strafverfahren und ein Entziehen der Fahrerlaubnis","Antworten b + c + d sind richtig"],"correct":4,"explanation":"Alkohol am Steuer kann ordnungswidrigkeiten-, straf-, fahrerlaubnis- und berufsrechtliche Konsequenzen auslösen.","source":"Schriftliche Fragen Recht, Originalfrage 47, PDF-Seite 9. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R48","domain":"Recht","category":"Sonder-, Wege- & Verkehrsrecht","label":"Recht · Originalfrage 48","question":"Die Entscheidung über die Inanspruchnahme von Sonder- und Wegerechten:","options":["Steht grundsätzlich der Leistelle zu, insbesondere bei der Anfahrt","Wird bei der Alarmierung getroffen und ist danach nicht mehr veränderbar","Muss vom Fahrzeugführer neu getroffen werden, wenn sich die Umstände vor Ort wesentlich geändert haben","Hängt vom Einzelfall ab","Antworten a + c + d sind richtig"],"correct":4,"explanation":"Die Nutzung von Sonder- und Wegerechten hängt von der konkreten Lage ab und muss bei geänderten Umständen neu bewertet werden; nach dem vorgegebenen Schlüssel ist auch die Leitstellenentscheidung einzubeziehen.","source":"Schriftliche Fragen Recht, Originalfrage 48, PDF-Seite 9. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R49","domain":"Recht","category":"Sonder-, Wege- & Verkehrsrecht","label":"Recht · Originalfrage 49","question":"Bei einer Einsatzfahrt gelten gewisse rechtliche Grundsätze. Welche der folgenden Aussagen ist falsch:","options":["Die strafrechtliche Verantwortlichkeit des Fahrers eines Einsatzfahrzeuges wird durch die Inanspruchnahme von Sonderrechten grundsätzlich nicht berührt","Dem Fahrer eines Einsatzfahrzeuges wird in der Regel immer verziehen, weil er unter Druck steht","Für Fahrer von Einsatzfahrzeugen gelten besonders hohe Sorgfaltspflichten für die Teilnahme am Straßenverkehr","Der Fahrer ist im Schadensfall dafür beweisbelastet, dass sowohl Blaulicht als auch Einsatzhorn aktiviert waren","Antworten b + d sind falsch"],"correct":1,"explanation":"Einsatzdruck beseitigt die persönliche strafrechtliche Verantwortung des Fahrers nicht. Die Aussage einer regelmäßigen Nachsicht ist daher falsch.","source":"Schriftliche Fragen Recht, Originalfrage 49, PDF-Seite 9. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R50","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 50","question":"Nach den Grundsätzen der zivilrechtlichen Haftung auf Schadensersatz können bei Fehlern im Rahmen der Behandlung folgende Personen oder Institutionen grundsätzlich in Anspruch genommen werden:","options":["NotSan","Zweckverband","Notarzt","RS","Alle"],"correct":4,"explanation":"Je nach Anspruchsgrundlage und Verantwortungsbereich können einzelne Einsatzkräfte, ärztliches Personal und der Rettungsdienstträger in Anspruch genommen werden.","source":"Schriftliche Fragen Recht, Originalfrage 50, PDF-Seite 10. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R51","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 51","question":"Unter welchen Umständen kann der NotSan von seinem Arbeitgeber in Regress genommen werden, wenn er im Dienst eine Straftat am Patienten oder einer dritten Person vornimmt?","options":["Bei einfacher Fahrlässigkeit","Bei grob fahrlässigem Handeln","Bei vorsätzlichem Handeln","Antworten b + c sind richtig","Antworten a + b + c sind richtig"],"correct":3,"explanation":"Ein innerbetrieblicher Regress kommt typischerweise bei grober Fahrlässigkeit und Vorsatz in Betracht, nicht regelmäßig bei einfacher Fahrlässigkeit.","source":"Schriftliche Fragen Recht, Originalfrage 51, PDF-Seite 10. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R52","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 52","question":"Was ist grobe Fahrlässigkeit?","options":["Ablassen der im Verkehr erforderlichen Sorgfalt","Arglistiges Herbeiführen eines Schadenfalles","Ein außer Acht lassen der im Verkehr erforderlichen Sorgfalt in besonders hohem Maße, d.h. wenn schon einfachste Überlegungen angestellt werden, die im konkreten Fall jedem einleuchten müssten","Das Wissen und Wollen der Verwirklichung eines Tatbestandes","Jede geringfügige Unachtsamkeit unabhängig von ihrer Bedeutung"],"correct":2,"explanation":"Grobe Fahrlässigkeit liegt vor, wenn die erforderliche Sorgfalt in besonders schwerem Maße verletzt und das außer Acht gelassen wird, was jedem hätte einleuchten müssen.","source":"Schriftliche Fragen Recht, Originalfrage 52, PDF-Seite 10. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R54","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 54","question":"Welche vertraglichen Rechtsbeziehungen bestehen zwischen den Beteiligten eines Notfalleinsatzes?","options":["Der NotSan und der Patient schließen einen Behandlungsvertrag ab","Zwischen Notarzt und Patient kommt ein Notarztvertrag zu Stande","Durch die Behandlung schließt der Patient mit dem ZRF einen Behandlungsvertrag","Der NotSan handelt hierbei als Stellvertreter","Antworten c + d sind richtig"],"correct":4,"explanation":"Der Behandlungsvertrag besteht nach dem Lösungsschlüssel zwischen Patient und ZRF; der Notfallsanitäter handelt bei dessen Erfüllung für den Träger.","source":"Schriftliche Fragen Recht, Originalfrage 54, PDF-Seite 10. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R55","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 55","question":"Welche Rechtsgebiete können bei Fehlverhalten des NotSan im Einsatz betroffen sein?","options":["Arbeitsrecht","Strafrecht","Allgemeines Zivilrecht","Antworten a + b + c sind richtig","Antworten b + c sind richtig"],"correct":3,"explanation":"Ein Fehlverhalten kann parallel arbeitsrechtliche, strafrechtliche und zivilrechtliche Folgen haben.","source":"Schriftliche Fragen Recht, Originalfrage 55, PDF-Seite 10. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R56","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 56","question":"Wie erfolgt üblicherweise der Vertragsschluss im Rettungsdienst?","options":["Konkludent bzw. schlüssig, d.h. das Verhalten wird als tätlich bindende Erklärung gewertet","Durch Unterschrift des Patienten","Es gibt keinen Vertragsschluss","Durch Anruf auf der Leitstelle","Nachträglich durch den Arzt in der Klinik"],"correct":0,"explanation":"Im Rettungsdienst kommt der Vertrag regelmäßig durch schlüssiges Verhalten zustande, etwa durch das Anfordern und Annehmen der Behandlung.","source":"Schriftliche Fragen Recht, Originalfrage 56, PDF-Seite 11. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R57","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 57","question":"Welche Aussage zur Aufklärungspflicht nach §630e trifft nicht zu:","options":["Der NotSan muss informieren, dass er kein Arzt ist","Der Patient muss nur aufgeklärt werden, wenn es Alternativmaßnahmen gibt","Die Aufklärung ist nötig, damit der Patient wirksam einwilligen kann","Gibt es einen gesetzlichen Betreuer muss dieser aufgeklärt werden","Bei höchster Dringlichkeit kann die Aufklärung auch vermindert ausfallen"],"correct":1,"explanation":"Die Aussage ist unzutreffend: Aufklärung ist nicht nur dann notwendig, wenn Alternativen bestehen, sondern grundsätzlich Voraussetzung einer wirksamen Einwilligung.","source":"Schriftliche Fragen Recht, Originalfrage 57, PDF-Seite 11. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R58","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 58","question":"Was gilt zur Dokumentationspflicht nach §630f BGB?","options":["Was nicht dokumentiert wurde liegt nachher in der Beweispflicht des Notfallsanitäters","Nachträgliche Änderungen sind nur bezüglich Rettungsdienstdokumentation erlaubt, z.B. Uhrzeiten, KM-Stand","Alle wesentlichen Maßnahmen sind zu dokumentieren","Antworten b + c sind richtig","Antworten a + b + c sind richtig"],"correct":4,"explanation":"Wesentliche Maßnahmen müssen dokumentiert werden. Fehlende Dokumentation kann Beweisnachteile verursachen; Änderungen müssen nachvollziehbar bleiben.","source":"Schriftliche Fragen Recht, Originalfrage 58, PDF-Seite 11. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R59","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 59","question":"Sie möchten einem volljährigen Patienten einen Zugang legen. Welche Antwort ist falsch:","options":["Der NotSan muss gemäß § 630e BGB über diese Maßnahme aufklären.","Gibt es einen anwesenden gesetzlichen Betreuer, muss dieser bei bestehender Vertretungsmacht aufgeklärt werden.","Der NotSan muss darüber informieren, dass er kein Arzt ist.","Der Patient muss nach der Aufklärung in die Maßnahme einwilligen.","Der Patient muss den Behandlungsvertrag zwingend schriftlich unterschrieben haben."],"correct":4,"explanation":"Ein Behandlungsvertrag muss nicht zwingend schriftlich unterschrieben werden. Er kann durch schlüssiges Verhalten zustande kommen.","source":"Schriftliche Fragen Recht, Originalfrage 59, PDF-Seite 11. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R60","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 60","question":"Welche Aussage zur Beweislast in der Rettungsdienstpraxis ist korrekt:","options":["Was nicht dokumentiert wurde gilt grundsätzlich als nicht erfolgt und müsste im Zweifelsfall durch den Rettungsdienstmitarbeiter nachgewiesen werden","Von dem Protokoll muss ein Durchschlag existieren","Bei einigen Einsätzen entfällt die Dokumentationspflicht","Das Protokoll muss zur Beweisfunktion zusätzlich in elektronischer Form geführt werden","Alle sind korrekt"],"correct":0,"explanation":"Nicht dokumentierte wesentliche Maßnahmen gelten im Streitfall häufig als nicht nachweisbar und müssen gegebenenfalls anderweitig bewiesen werden.","source":"Schriftliche Fragen Recht, Originalfrage 60, PDF-Seite 11. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R61","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 61","question":"Was sind die Leistungspflichten eines Behandlungsvertrages nach §630a BGB?","options":["Behandlung gegen Vergütung","Behandlung muss lege artis sein","Nur a ist richtig","Nur b ist richtig","Antworten a + b sind richtig"],"correct":4,"explanation":"§ 630a BGB beschreibt die Behandlungspflicht nach fachlichem Standard und die grundsätzlich geschuldete Vergütung.","source":"Schriftliche Fragen Recht, Originalfrage 61, PDF-Seite 11. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R62","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 62","question":"Wer sind nach dem bereitgestellten Fragenkatalog die Vertragspartner eines im Saarland geschlossenen Behandlungsvertrages im Rettungsdienst?","options":["Der ZRF und der Patient","Der Notfallsanitäter persönlich und der Patient","Die Integrierte Leitstelle und die Krankenkasse","Der Notarzt persönlich und der Arbeitgeber des Patienten"],"correct":0,"explanation":"Nach dem vorgegebenen saarländischen Modell schließen Patient und ZRF den Behandlungsvertrag.","source":"Schriftliche Fragen Recht, Originalfrage 62, PDF-Seite 12. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R63","domain":"Recht","category":"Zivilrecht, Haftung & Dokumentation","label":"Recht · Originalfrage 63","question":"Sie werden zu einem bewusstlosen Patienten gerufen. Welche Aussage zum entstehenden Rechtsverhältnis ist nach dem Fragenkatalog richtig?","options":["Es entsteht grundsätzlich überhaupt kein Rechtsverhältnis.","Beim Handeln im Interesse des Patienten kann ein Quasivertrag im Rahmen der Geschäftsführung ohne Auftrag entstehen.","Ein wirksamer Vertrag entsteht erst nach einer späteren schriftlichen Unterschrift.","Nur die Krankenkasse kann für den Patienten einen Vertrag schließen."],"correct":1,"explanation":"Bei einem bewusstlosen Patienten kann durch eine berechtigte Geschäftsführung ohne Auftrag ein gesetzliches, vertragsähnliches Schuldverhältnis entstehen.","source":"Schriftliche Fragen Recht, Originalfrage 63, PDF-Seite 12. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R64","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 64","question":"Welche Aussage zur sofortigen Unterbringung nach §6 Unterbringungsgesetz, umgangssprachlich Zwangseinweisung, ist falsch:","options":["Bei Ausübung von körperlichem Zwang wird die Polizei benötigt","Ein ärztliches Attest zur Einweisungsempfehlung darf nicht älter als 3 Tage sein","Das ärztliche Zeugnis darf jeder approbierte Arzt ausstellen","Ein Notarzt muss den Transport in jedem Fall begleiten","Der Patient muss unterbringungsbedürftig sein"],"correct":3,"explanation":"Eine ärztliche Begleitung ist nicht in jedem Fall zwingend. Deshalb ist die pauschale Aussage zur obligatorischen Notarztbegleitung falsch.","source":"Schriftliche Fragen Recht, Originalfrage 64, PDF-Seite 12. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R65","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 65","question":"Begehen Sie eine Körperverletzung, wenn Sie einem Patienten einen i.v.-Zugang legen?","options":["Nur wenn ich das Examen noch nicht bestanden habe","Nur wenn der Patient minderjährig ist","Nur wenn er sich wehrt","Ja, aber ich kann nicht bestraft werden, solang ich keine Medikamente gebe, da die Kanüle keine Waffe ist","Grundsätzlich ja, aber sofern der ordnungsgemäß aufgeklärte Patient hierin einwilligt liegt keine strafbare Körperverletzung vor"],"correct":4,"explanation":"Das Legen eines intravenösen Zugangs erfüllt zunächst den Körperverletzungstatbestand; die wirksame Einwilligung nach Aufklärung rechtfertigt die Maßnahme.","source":"Schriftliche Fragen Recht, Originalfrage 65, PDF-Seite 12. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R66","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 66","question":"Nach einem Krankentransport finden Sie im RTW die Versicherungskarte des gerade transportierten Patienten. Sie erinnern sich diese zwischen trage und Auflage gesteckt zu haben, um sie dann in der Aufnahme abzugeben. Dabei fällt Ihnen auf, dass die Gültigkeit der Karte vor 2 Tage abgelaufen ist. Aus Ihrer Sicht hat die Karte jedenfalls keinen Wert mehr. Sie werfen sie zusammen mit dem restlichen Müll weg. Welche Aussage ist richtig:","options":["Damit habe ich eine Unterschlagung begangen","Ich habe mich eines Diebstahls strafbar gemacht, da ich dem Patienten die Karte weggenommen habe","Grundsätzlich wäre diese Tat nur strafbar, wenn der Patient mich anzeigt","Da die Karte keinen Wert mehr hat, kann ich mich auch nicht strafbar gemacht haben","Ich habe mich nicht strafbar gemacht, da der Patient die Karte nicht zurückverlangt hat."],"correct":0,"explanation":"Wer eine fremde bewegliche Sache, die er bereits besitzt, dem Eigentümer vorenthält oder wie eine eigene behandelt, kann eine Unterschlagung begehen; ein geringer Wert beseitigt die Fremdheit nicht.","source":"Schriftliche Fragen Recht, Originalfrage 66, PDF-Seite 12. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R67","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 67","question":"Ihnen wird von Ihrem Arbeitgeber eine Beschwerde zu einem von Ihnen geleisteten Einsatz weitergegeben, mit der Bitte um Stellungnahme. Ein Herr Meyer beschwert sich, sie wären bei dem Einsatz 2018 bei seiner Freundin Frau Scholl so unfreundlich gewesen. So ein Verhalten wäre sicher auch schädlich für die Patientin. Da der Einsatz bereits längere Zeit in der Vergangenheit liegt haben sie keine Erinnerung mehr zu dem Namen. Wie gehen Sie vor?","options":["Ich gebe eine Stellungnahme allein aus meiner Erinnerung ab, ohne die Unterlagen zu prüfen.","Ich übersende das DIVI-Protokoll unmittelbar an Herrn Meyer.","Ich übersende das DIVI-Protokoll unmittelbar an Frau Scholl, ohne den Dienstweg zu beachten.","Ich prüfe das DIVI-Protokoll intern und teile meinem Arbeitgeber mit, dass Herr Meyer dort nicht als berechtigte Person genannt ist.","Ich verweigere ohne Prüfung jede dienstliche Stellungnahme."],"correct":3,"explanation":"Patientendaten dürfen nicht an einen nicht legitimierten Beschwerdeführer weitergegeben werden. Eine interne Prüfung und Rückmeldung an den Arbeitgeber wahrt den Dienstweg.","source":"Schriftliche Fragen Recht, Originalfrage 67, PDF-Seite 13. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R68","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 68","question":"Sie werden bei einem Bereitstellungseinsatz von einem Schaulustigen angegriffen. Wie verhalten Sie sich vorrangig?","options":["Ich setze ohne Vorwarnung ein hartes Einsatzmittel gegen den Angreifer ein.","Ich bleibe unabhängig von der Gefahr am bisherigen Standort.","Ich fordere den Angreifer deutlich auf, mich in Ruhe zu lassen, und verlasse bei Bedarf den Gefahrenbereich.","Ich übertrage die Auseinandersetzung ohne weitere Maßnahmen auf einen Kollegen."],"correct":2,"explanation":"Eigenschutz hat Vorrang. Zunächst soll der Angreifer klar angesprochen und bei fortbestehender Gefahr der Gefahrenbereich verlassen werden.","source":"Schriftliche Fragen Recht, Originalfrage 68, PDF-Seite 13. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R69","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 69","question":"Sie stellen bei einer erfolglosen Reanimation im Altenheim fest, dass sich am Hals des Patienten unerklärbare Einstichstellen befinden, die von einer Kanüle oder ähnlichem stammen könnten. Wie gehen Sie vor?","options":["Ich informiere ohne weitere Manipulation am Patienten den Notarzt, damit dieser notfalls die Polizei hinzuziehen kann","Es obliegt dem Arzt den Patienten auf Zeichen einer unnatürlichen Todesursache zu untersuchen, da halte ich mich lieber mal raus","Ich bespreche mit meinem Kollegen was er davon hält, sollte die Möglichkeit bestehen, dass die Einstiche nichts mit dem Tod des Patienten zu tun haben lassen wir die Sache auf sich beruhen","Ich bitte die Pflegekräfte die Sache abzuklären","Ich achte die Totenruhe und ignoriere meine Entdeckung"],"correct":0,"explanation":"Hinweise auf eine möglicherweise nicht natürliche Todesursache dürfen nicht durch weitere Manipulation verändert werden und müssen unverzüglich dem verantwortlichen Arzt mitgeteilt werden.","source":"Schriftliche Fragen Recht, Originalfrage 69, PDF-Seite 13. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R70","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 70","question":"Ihr Arbeitgeber fordert Sie an einem freien Tag kurzfristig zum Dienst auf. Sie haben vor weniger als zwei Stunden mehrere alkoholische Getränke konsumiert. Wie reagieren Sie?","options":["Ich erkläre, dass ich wegen fehlender Dienstfähigkeit nicht einspringen kann.","Ich erscheine zum Dienst, solange ich nicht selbst fahren muss.","Ich verschweige den Alkoholkonsum und lasse den Arbeitgeber entscheiden.","Ich muss ungeachtet meiner Dienstfähigkeit zwingend erscheinen."],"correct":0,"explanation":"Wer Alkohol konsumiert hat und deshalb nicht sicher dienstfähig ist, darf den Dienst nicht antreten und muss dies dem Arbeitgeber mitteilen.","source":"Schriftliche Fragen Recht, Originalfrage 70, PDF-Seite 13. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R71","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 71","question":"Sie möchten nächstes Jahr im Juni eine Kreuzfahrt machen. Sie finden online ein tolles Angebot zu einer 28-tägigen Fahrt mit der AIDA zu den Kanaren. Wenn Sie sofort buchen, erhalten Sie ein unschlagbares Preisangebot. Welche Aussage ist korrekt?","options":["Mein Arbeitgeber ist gehalten mir meinen Jahresurlaub in einem Stück zu geben, deswegen muss er mir den Urlaub direkt genehmigen","Wenn ich jetzt sofort Urlaub beantrage, kann meinem Arbeitgeber auch nicht der Urlaub eines Kollegen in diesem Zeitraumals betrieblicher Grund dienen, er muss ihn genehmigen.","Leider habe ich im Juni noch nicht den vollen Anspruch auf meinen Jahresurlaub erarbeitet und kann deshalb nicht alles auf einmal beantragen","Ich habe keinen durchsetzbaren Anspruch auf Urlaub in diesem Zeitraum, wenn erhebliche betriebliche Gründe im Wege stehen, wie z.B. Urlaubsanträge meiner Kollegen","Es kann sein, dass mein Urlaubsantrag abgelehnt wird, dann schuldet mir mein Arbeitgeber jedoch Schadensersatz"],"correct":3,"explanation":"Urlaubswünsche sind zu berücksichtigen, können aber bei entgegenstehenden dringenden betrieblichen Belangen oder vorrangigen Urlaubswünschen anderer Beschäftigter abgelehnt werden.","source":"Schriftliche Fragen Recht, Originalfrage 71, PDF-Seite 14. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R72","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 72","question":"Zu Beginn Ihrer Schicht fällt Ihnen bei Ihrem Kollegen ein unangenehmer Alkohol Geruch auf. Dieser scheint sich auch nicht richtig konzentrieren zu können. Welche Antwort ist korrekt?","options":["Er ist heute der NotSan, ich der Fahrer, also egal","Ich spreche es an und gehe mit ihm gemeinsam zum Dienstherrn, auch wenn das etwas unangenehm ist","Ich schicke ihn heim","Ich bin nicht gezwungen die Schicht mit ihm zu beenden, wenn er eine Gefahr für mich und andere darstellt. Bei begründetem Verdacht darf unser Arbeitgeber verlangen, dass der Kollege zunächst einen Arzt aufsucht, um seine Dienstbereitschaft attestieren zu lassen","Antworten b + d sind richtig"],"correct":4,"explanation":"Ein auffälliger Alkoholgeruch und Konzentrationsstörungen müssen angesprochen werden. Bei begründetem Gefahrenverdacht darf die gemeinsame Dienstausübung abgelehnt und eine ärztliche Klärung verlangt werden.","source":"Schriftliche Fragen Recht, Originalfrage 72, PDF-Seite 14. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"R73","domain":"Recht","category":"Praxisfälle, Unterbringung & Arbeitsrecht","label":"Recht · Originalfrage 73","question":"Eine Kollegin teilt Ihnen während der Schicht mit, dass sie schwanger ist. Welche Reaktion ist nach dem Lösungsschlüssel vorgesehen?","options":["Ich informiere unverzüglich den Arbeitgeber, damit Tätigkeiten mit einer möglichen Gefährdung des ungeborenen Kindes beendet werden können.","Ich ignoriere die Information vollständig, auch wenn eine akute Gefährdung besteht.","Ich behandle die Schwangerschaft rechtlich wie eine gewöhnliche Erkrankung ohne Arbeitsschutzfolgen.","Ich lasse die Kollegin ohne Mitteilung an die zuständige Stelle weiter alle Tätigkeiten ausführen."],"correct":0,"explanation":"Nach dem Lösungsschlüssel ist die Schwangerschaft wegen möglicher Gefährdungen unverzüglich dem Arbeitgeber mitzuteilen, damit Schutzmaßnahmen und Beschäftigungsverbote umgesetzt werden können.","source":"Schriftliche Fragen Recht, Originalfrage 73, PDF-Seite 14. Richtige Antwort im Quelldokument durch rotes Herz markiert.","note":""},{"uid":"Q1","domain":"QM","category":"QM · Normen","label":"QM · Frage 1","question":"Was regelt die DIN EN 1789?","options":["die korrekte Durchführung einer Händedesinfektion","Ausstattung des Notfallkoffers","Ausstattung von Rettungswagen","Ausschließlich die Größe des Patientenraumes","Funktionsweise von Defibrillatoren"],"correct":2,"explanation":"Für diesen Fragenpool ist „Ausstattung von Rettungswagen“ die richtige Auswahl. Die DIN EN 1789 behandelt Rettungsdienstfahrzeuge/Krankenkraftwagen und deren Ausrüstung.","source":"10. Fragenpool QM, Frage 1; DIN EN 1789.","note":""},{"uid":"Q2","domain":"QM","category":"QM · Normen","label":"QM · Frage 2","question":"Nach welcher DIN EN ISO erfolgt die Zertifizierung eines QMS im Rettungsdienst?","options":["DIN EN ISO 9001:2008","DIN EN ISO 9001:2015","DIN EN ISO 9999:2008","DIN EN ISO 9302:2008","DIN EN ISO 9013:2010"],"correct":1,"explanation":"Die im Fragenpool gesuchte Norm ist DIN EN ISO 9001:2015.","source":"10. Fragenpool QM, Frage 2; ISO 9001:2015.","note":""},{"uid":"Q3","domain":"QM","category":"QM · QMS","label":"QM · Frage 3","question":"Was ist kein Grund um ein QMS zu betreiben?","options":["Fehlerreduktion durch klar definierte Arbeitsabläufe anhand festgelegter Prozesse","Ausschöpfung wirtschaftlicher Vorteile bei Nutzung eines etablierten QMS","Zertifizierung ermöglicht die Teilnahme an europaweiten Ausschreibungen","um eine erhöhte Kundenzufriedenheit zu generieren","Das QMS dient maßgeblich der Mitarbeiter Überwachung"],"correct":4,"explanation":"Ein QMS soll Prozesse, Qualität, Fehlervermeidung und Kundenzufriedenheit verbessern; eine maßgebliche Mitarbeiterüberwachung ist kein eigentlicher Zweck.","source":"10. Fragenpool QM, Frage 3.","note":""},{"uid":"Q4","domain":"QM","category":"QM · Rahmenbedingungen","label":"QM · Frage 4","question":"Wer ist grundsätzlich Kostenträger im Rettungsdienst?","options":["DRK und Feuerwehr","ZRF","Landkreise","kreisfreie Städte","Krankenkassen"],"correct":4,"explanation":"Die im Fragenpool gesuchte Antwort lautet „Krankenkassen“.","source":"10. Fragenpool QM, Frage 4.","note":""},{"uid":"Q5","domain":"QM","category":"QM · QMS","label":"QM · Frage 5","question":"Was ist keine Aufgabe des Beauftragten der obersten Leitung im Rahmen eines QMS?","options":["Gewährleistung der Finanzierung des QMS","Sicherstellung der Qualitätszielfestlegung","Erhöhung der Kundenzufriedenheit durch Ermittlung von Kundenanforderungen","Zu differenzieren welche Aufgaben als Prozess im Rahmen des QMS angelet werden und welche ohne Etablierung in das QMS weiterlaufen können","Festlegung der Qualitätspolitik"],"correct":0,"explanation":"Für das prüfungsorientierte Lernen dieses Fragenpools ist „Gewährleistung der Finanzierung des QMS“ als Zielantwort hinterlegt.","source":"10. Fragenpool QM, Frage 5.","note":"Hinweis: Die Formulierung „Beauftragter der obersten Leitung“ stammt aus einer älteren QM-Systematik; die Frage wird hier bewusst so gelernt, wie sie im hochgeladenen Pool steht."},{"uid":"Q6","domain":"QM","category":"QM · Arbeitsschutz","label":"QM · Frage 6","question":"Welche Aussage zu den zwingend erforderlichen Inhalten einer Betriebsanweisung ist falsch?","options":["Informationen über Betriebsstörungen und Unfällen","Informationen über angemessene Verhaltensregeln und Vorsichtsmaßnahmen","Informationen über die am Arbeitsplatz be- bzw. entstehenden Gefahren","Informationen über frühere, veraltete Verhaltensmaßgaben gem. BG","Informationen über Maßnahmen zur Unfallverhütung"],"correct":3,"explanation":"Frühere, veraltete Verhaltensmaßgaben gehören nicht zu den zwingend erforderlichen aktuellen Inhalten einer Betriebsanweisung.","source":"10. Fragenpool QM, Frage 6.","note":""},{"uid":"Q7","domain":"QM","category":"QM · Unterweisung","label":"QM · Frage 7","question":"Welche Inhalte müssen bei der Ein-/ Unterweisung neuer Mitarbeiter berücksichtigt werden?","options":["Brandschutz","Persönliche Schutzausrüstung","Gefahrstoffe","Infektionsschutzgesetz","alle Antworten sind korrekt"],"correct":4,"explanation":"Im Fragenpool werden alle genannten Bereiche als relevante Unterweisungsinhalte zusammengefasst.","source":"10. Fragenpool QM, Frage 7.","note":""},{"uid":"Q8","domain":"QM","category":"QM · Sicherheit","label":"QM · Frage 8","question":"Welche Aussage zum suizidalen Patienten ist korrekt?","options":["Fahrzeug gut sichtbar für den Patienten platzieren","Die Kommunikation findet ausschließlich durch eine Fachkraft statt","Eine Drehleiter ist ein gutes Mittel um den Patienten zu retten","Absprache zwischen den Einsatzkräften ist zweitrangig, da die Kommunikation über die Fachkraft stattfindet","eine Nachforderung von Fachkräften ist obligat"],"correct":4,"explanation":"Aus den angebotenen Antworten ist die Nachforderung geeigneter Fachkräfte die richtige Aussage. Eigenschutz, abgestimmtes Vorgehen und ein möglichst reizarmes Setting bleiben wichtig.","source":"10. Fragenpool QM, Frage 8; hochgeladene Unterrichtsunterlagen zum Umgang mit suizidalen Patienten.","note":""},{"uid":"Q9","domain":"QM","category":"QM · PDCA","label":"QM · Frage 9","question":"Der Deming- Kreis oder auch PDCA- Zyklus beschreibt einen 4- phasigen Problemlösungsprozess. Welche Phase gehört nicht hierzu?","options":["Plan (Planen)","Prevent (Vorbeugen)","Act (Handeln)","Do (Umsetzen)","Check (Überprüfen)"],"correct":1,"explanation":"PDCA steht für Plan – Do – Check – Act. „Prevent“ gehört nicht als eigene Phase dazu.","source":"10. Fragenpool QM, Frage 9.","note":""},{"uid":"Q10","domain":"QM","category":"QM · Beschwerdemanagement","label":"QM · Frage 10","question":"Welche Regel ist im Zusammenhang mit der Durchführung eines Beschwerdemanagements falsch?","options":["Entwicklung eines einheitlichen Beschwerdebogens ist von großer Bedeutung","Die Bearbeitung von Beschwerden/ Kritik muss in einem kurzen, definierten Zeitfenster erfolgen","mit dem Beschwerdeführer sollte persönlicher Kontakt vermieden werden","Jede Kritik und Beschwerde ist ernst zu nehmen","Transparenz bei der Kommunikation aus den aus der Beschwerde resultierenden Maßnahmen"],"correct":2,"explanation":"Persönlicher Kontakt mit dem Beschwerdeführer soll nicht pauschal vermieden werden. Beschwerden sollen ernst genommen, nachvollziehbar und zeitnah bearbeitet werden.","source":"10. Fragenpool QM, Frage 10.","note":""},{"uid":"Q11","domain":"QM","category":"QM · Rahmenbedingungen","label":"QM · Frage 11","question":"Welche Rahmen- und Arbeitsbedingungen sind maßgeblich für eine optimale Patientenversorgung?","options":["Auswahl des geeigneten Standortes einer Rettungswache","Ausstattung der Rettungsmittel gemäß DIN- Normen","Vorhaltung der Rettungsmittel nach dem ermittelten Bedarf","Erhebung und vergleich von Kennzahlen zur Prozessoptimierung","alle Antworten sind korrekt"],"correct":4,"explanation":"Alle genannten Punkte beeinflussen Struktur-, Prozess- und Ergebnisqualität und damit die Patientenversorgung.","source":"10. Fragenpool QM, Frage 11.","note":""},{"uid":"Q12","domain":"QM","category":"QM · Medizinprodukte","label":"QM · Frage 12","question":"Welcher Bereich gehört nicht zum Inhalt eines Medizinproduktebuches?","options":["Bezeichnung/ Identifikation","Funktionsprüfung/ Einweisung","Name der eingewiesenen Person","Anschriften der Wartungsfirmen","alle Antworten sind korrekt"],"correct":3,"explanation":"Die Anschriften der Wartungsfirmen gehören nicht zu den gesetzlich aufgezählten Pflichtangaben des Medizinproduktebuches. Erfasst werden u. a. Identifikation, Funktionsprüfung/Einweisung, eingewiesene Personen sowie Kontrollen/Instandhaltungen und die ausführende Person bzw. Firma.","source":"10. Fragenpool QM, Frage 12; MPBetreibV § 13.","note":""}];
+const STORE = "notsan-tag3-adaptiv-recht-qm-v1";
+const MASTER_N = 3;
+
+let state = loadState();
+let currentMode = "all";
+let current = null;
+let answered = false;
+
+function blankStat(){
+  return {seen:0,correct:0,wrong:0,streak:0,mastered:false,due:0,last:-999,guessed:0};
+}
+function loadState(){
+  try{
+    const x=JSON.parse(localStorage.getItem(STORE)||"null");
+    if(x && x.stats) return x;
+  }catch(e){}
+  return {step:0,totalAnswers:0,stats:{}};
+}
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}
+}
+function S(uid){
+  if(!state.stats[uid]) state.stats[uid]=blankStat();
+  return state.stats[uid];
+}
+function isWeak(q){
+  const s=S(q.uid);
+  const acc=s.seen ? s.correct/s.seen : 1;
+  return !s.mastered && (s.wrong>0 || (s.seen>=2 && acc<0.75));
+}
+function inMode(q,mode=currentMode){
+  if(mode==="law") return q.domain==="Recht";
+  if(mode==="qm") return q.domain==="QM";
+  if(mode==="weak") return isWeak(q);
+  return true;
+}
+function active(mode=currentMode){
+  return QUESTIONS.filter(q=>inMode(q,mode) && !S(q.uid).mastered);
+}
+function rand(a,b){return a+Math.floor(Math.random()*(b-a+1));}
+function weightedPick(arr){
+  if(!arr.length) return null;
+  let total=0;
+  const ws=arr.map(q=>{
+    const s=S(q.uid);
+    let w=1;
+    w += s.wrong*5;
+    w += (MASTER_N-s.streak)*1.4;
+    if(s.seen===0) w += .8;
+    const ago=state.step-s.last;
+    if(ago<2) w*=.05;
+    else if(ago<4) w*=.35;
+    total+=w; return w;
+  });
+  let r=Math.random()*total;
+  for(let i=0;i<arr.length;i++){r-=ws[i];if(r<=0)return arr[i];}
+  return arr[arr.length-1];
+}
+function chooseNext(){
+  let a=active();
+  if(currentMode==="weak" && !a.length) return null;
+  if(!a.length) return null;
+
+  let due=a.filter(q=>S(q.uid).due<=state.step);
+  if(!due.length){
+    const min=Math.min(...a.map(q=>S(q.uid).due));
+    due=a.filter(q=>S(q.uid).due===min);
+  }
+  const reviews=due.filter(q=>S(q.uid).seen>0);
+  const fresh=due.filter(q=>S(q.uid).seen===0);
+
+  // In der Regel Wiederholungsfragen priorisieren; trotzdem kontinuierlich neue Fragen zuführen.
+  let pool;
+  if(reviews.length && fresh.length) pool=(Math.random()<0.72 ? reviews : fresh);
+  else pool=reviews.length?reviews:fresh;
+  return weightedPick(pool.length?pool:due);
+}
+function masteryDots(s){
+  let h="";
+  for(let i=0;i<MASTER_N;i++) h+=`<span class="dot ${i<s.streak?"on":""}"></span>`;
+  return h;
+}
+function setMode(mode){
+  currentMode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+  showLearn();
+  nextQuestion();
+}
+function showLearn(){
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("done").classList.add("hidden");
+  document.getElementById("statsPanel").classList.add("hidden");
+  document.getElementById("learn").classList.remove("hidden");
+}
+function showHome(){
+  document.getElementById("learn").classList.add("hidden");
+  document.getElementById("done").classList.add("hidden");
+  document.getElementById("statsPanel").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+  renderOverview();
+}
+function nextQuestion(){
+  answered=false;
+  current=chooseNext();
+  if(!current){
+    showDone();
+    return;
+  }
+  const s=S(current.uid);
+  document.getElementById("qlabel").textContent=current.label;
+  document.getElementById("qcat").textContent=current.category;
+  document.getElementById("qtext").textContent=current.question;
+  document.getElementById("dots").innerHTML=masteryDots(s);
+  document.getElementById("qstats").textContent=`gesehen ${s.seen}× · falsch ${s.wrong}×`;
+  document.getElementById("feedback").className="feedback hidden";
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("nextBtn").classList.add("hidden");
+  document.getElementById("markWeakBtn").classList.add("hidden");
+  const box=document.getElementById("options");
+  box.innerHTML="";
+  current.options.forEach((o,i)=>{
+    const b=document.createElement("button");
+    b.className="opt";
+    b.innerHTML=`<b>${String.fromCharCode(97+i)})</b> ${esc(o)}`;
+    b.onclick=()=>answer(i,b);
+    box.appendChild(b);
+  });
+  renderLive();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function answer(idx,btn){
+  if(answered) return;
+  answered=true;
+  state.step++;
+  state.totalAnswers++;
+  const s=S(current.uid);
+  s.seen++;
+  s.last=state.step;
+  const correct=idx===current.correct;
+
+  [...document.querySelectorAll(".opt")].forEach((b,i)=>{
+    b.disabled=true;
+    if(i===current.correct)b.classList.add("correct");
+    if(i===idx && !correct)b.classList.add("wrong");
+  });
+
+  if(correct){
+    s.correct++;
+    s.streak++;
+    if(s.streak>=MASTER_N){
+      s.streak=MASTER_N;
+      s.mastered=true;
+      s.due=99999999;
+    }else if(s.streak===1){
+      s.due=state.step+rand(6,9);
+    }else{
+      s.due=state.step+rand(12,18);
+    }
+  }else{
+    s.wrong++;
+    s.streak=0;
+    s.mastered=false;
+    s.due=state.step+rand(2,4);
+  }
+  save();
+
+  const fb=document.getElementById("feedback");
+  fb.className="feedback "+(correct?"goodfb":"badfb");
+  let status = s.mastered
+    ? `<span class="tagok">3× sicher – Frage ist gemeistert und verschwindet</span>`
+    : correct
+      ? `<span class="tagok">${s.streak}/3 richtig – kommt später erneut</span>`
+      : `<span class="tagwrong">Serie zurück auf 0 – kommt bald wieder</span>`;
+  fb.innerHTML=`
+    <div class="answerline">${correct?"✅ Richtig":"❌ Falsch"}</div>
+    <div><b>Richtige Antwort:</b> ${esc(current.options[current.correct])}</div>
+    <p>${esc(current.explanation)}</p>
+    ${current.note?`<div class="notice small">${esc(current.note)}</div>`:""}
+    <div>${status}</div>
+    <div class="source"><b>Quelle/Lernbasis:</b> ${esc(current.source)}</div>`;
+  document.getElementById("dots").innerHTML=masteryDots(s);
+  document.getElementById("qstats").textContent=`gesehen ${s.seen}× · falsch ${s.wrong}×`;
+  document.getElementById("nextBtn").classList.remove("hidden");
+  if(correct && !s.mastered) document.getElementById("markWeakBtn").classList.remove("hidden");
+  renderOverview();
+  renderLive();
+}
+function markWeak(){
+  if(!current) return;
+  const s=S(current.uid);
+  // Ein geratener Treffer zählt nicht als gefestigte Wiederholung.
+  s.guessed=(s.guessed||0)+1;
+  s.streak=Math.max(0,s.streak-1);
+  s.mastered=false;
+  s.due=state.step+rand(2,4);
+  save();
+  document.getElementById("markWeakBtn").classList.add("hidden");
+  const fb=document.getElementById("feedback");
+  fb.innerHTML += `<p class="small" style="color:#fde68a"><b>Als unsicher markiert:</b> Der Treffer zählt nicht als sichere Wiederholung und die Frage kommt früher zurück.</p>`;
+  document.getElementById("dots").innerHTML=masteryDots(s);
+  renderOverview(); renderLive();
+}
+function showDone(){
+  document.getElementById("learn").classList.add("hidden");
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("done").classList.remove("hidden");
+  const names={all:"Recht und QM",law:"Recht",qm:"QM",weak:"deine aktuellen Schwachstellen"};
+  document.getElementById("doneTitle").textContent=currentMode==="weak"?"Keine akuten Schwachstellen mehr.":`${names[currentMode]} sitzt im 3×-sicher-System.`;
+  document.getElementById("doneText").textContent=currentMode==="weak"
+    ?"Aktuell erfüllt keine offene Frage mehr die Schwachstellen-Kriterien. Du kannst wieder mit „Alles“ weitermachen."
+    :"Alle Fragen dieses Bereichs wurden jeweils dreimal in Folge richtig beantwortet.";
+}
+function resetMode(mode){
+  QUESTIONS.filter(q=>inMode(q,mode==="weak"?"all":mode)).forEach(q=>state.stats[q.uid]=blankStat());
+  state.step=0; save(); renderOverview();
+}
+function renderOverview(){
+  const mastered=QUESTIONS.filter(q=>S(q.uid).mastered).length;
+  const weak=QUESTIONS.filter(isWeak).length;
+  document.getElementById("sMaster").textContent=mastered;
+  document.getElementById("sOpen").textContent=QUESTIONS.length-mastered;
+  document.getElementById("sWeak").textContent=weak;
+  document.getElementById("sAnswers").textContent=state.totalAnswers||0;
+  document.getElementById("topProgress").textContent=`${mastered} / ${QUESTIONS.length} gemeistert`;
+  document.getElementById("masterBar").style.width=`${mastered/QUESTIONS.length*100}%`;
+}
+function renderLive(){
+  const s=current?S(current.uid):blankStat();
+  const modeQs=QUESTIONS.filter(q=>inMode(q));
+  const masteredMode=modeQs.filter(q=>S(q.uid).mastered).length;
+  document.getElementById("lMaster").textContent=masteredMode;
+  document.getElementById("lOpen").textContent=Math.max(0,modeQs.length-masteredMode);
+  document.getElementById("lStreak").textContent=`${s.streak}/3`;
+  let seen=0,corr=0;
+  modeQs.forEach(q=>{seen+=S(q.uid).seen;corr+=S(q.uid).correct;});
+  document.getElementById("lAcc").textContent=seen?Math.round(corr/seen*100)+"%":"0%";
+}
+function showStats(){
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("learn").classList.add("hidden");
+  document.getElementById("statsPanel").classList.remove("hidden");
+  const groups={};
+  QUESTIONS.forEach(q=>{
+    const key=q.domain==="QM"?"QM":q.category;
+    if(!groups[key])groups[key]=[];
+    groups[key].push(q);
+  });
+  let h="";
+  Object.entries(groups).forEach(([name,arr])=>{
+    const mast=arr.filter(q=>S(q.uid).mastered).length;
+    const weak=arr.filter(isWeak).length;
+    const pct=Math.round(mast/arr.length*100);
+    h+=`<div style="margin:15px 0"><b>${esc(name)}</b> <span class="muted small">${mast}/${arr.length} gemeistert · ${weak} schwach</span>
+       <div class="barline"><i style="width:${pct}%"></i></div></div>`;
+  });
+  const weakest=QUESTIONS.filter(q=>!S(q.uid).mastered && S(q.uid).seen>0)
+    .sort((a,b)=>((S(b.uid).wrong*5-S(b.uid).streak)-(S(a.uid).wrong*5-S(a.uid).streak))).slice(0,12);
+  if(weakest.length){
+    h+=`<h2 style="margin-top:22px">Fragen, die du am häufigsten wiederholen solltest</h2><table class="table"><tr><th>Frage</th><th>Stand</th></tr>`;
+    weakest.forEach(q=>{
+      const s=S(q.uid);
+      h+=`<tr><td><b>${esc(q.label)}</b><br>${esc(q.question)}</td><td>${s.streak}/3<br><span class="muted">${s.wrong}× falsch</span></td></tr>`;
+    });
+    h+="</table>";
+  }
+  document.getElementById("statsContent").innerHTML=h;
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+document.getElementById("startAll").onclick=()=>setMode("all");
+document.getElementById("startLaw").onclick=()=>setMode("law");
+document.getElementById("startQM").onclick=()=>setMode("qm");
+document.getElementById("startWeak").onclick=()=>setMode("weak");
+document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+document.getElementById("homeBtn").onclick=showHome;
+document.getElementById("nextBtn").onclick=nextQuestion;
+document.getElementById("markWeakBtn").onclick=markWeak;
+document.getElementById("showStats").onclick=showStats;
+document.getElementById("closeStats").onclick=showHome;
+document.getElementById("doneHome").onclick=showHome;
+document.getElementById("redoMode").onclick=()=>{
+  if(confirm("Den Lernstand dieses Bereichs wirklich zurücksetzen?")){resetMode(currentMode);setMode(currentMode);}
+};
+document.getElementById("resetAll").onclick=()=>{
+  if(confirm("Wirklich ALLE Fortschritte bei Recht und QM löschen?")){
+    localStorage.removeItem(STORE);state={step:0,totalAnswers:0,stats:{}};renderOverview();
+  }
+};
+
+renderOverview();
+</script>
+</body>
+</html>
